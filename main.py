@@ -38,5 +38,5 @@ def getImg(name):
     return FileResponse(path, media_type=extension)
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='192.168.1.31', port=1000)
+    uvicorn.run(app, host='192.168.1.57', port=1000)
 
