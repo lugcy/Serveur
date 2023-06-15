@@ -19,7 +19,7 @@ function requestImg(url){
 }
 
 function generateTable(){
-	request('http://127.0.0.1:8080/getNbrPosts')
+	request('http://192.168.1.31:1000/getNbrPosts')
 		.then(data => {
 			if(data.nbrPosts!=0){
 				const tablecontainer = document.getElementById('tablecontainer');
@@ -33,7 +33,7 @@ function generateTable(){
 						const div = document.createElement('div');
 						div.className = 'cell';
 						
-						requestImg('http://127.0.0.1:8080/getImg/img.jpg')
+						requestImg('http://192.168.1.31:1000/getImg/img.jpg')
 							.then(imgUrl => {
 								url = 'url(' + imgUrl + ')';
 								console.log(url);
