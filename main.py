@@ -16,7 +16,7 @@ app.add_middleware(
 )
 @app.get('/')
 def accueil(request : Request):
-    return templates.TemplateResponse("page_principale.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get('/style.css')
 def getCSS(request : Request):
