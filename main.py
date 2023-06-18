@@ -4,12 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import uvicorn
+import json
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/Ressources", StaticFiles(directory="Ressources"), name="Ressources");
 
 templates = Jinja2Templates(directory="")
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,25 +23,32 @@ app.add_middleware(
 def accueil(request : Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get('/style.css')
+@app.get('/static/style.css')
 def getCSS(request : Request):
-    return templates.TemplateResponse("style.css", {"request": request})
+    return templates.TemplateResponse("static/style.css", {"request": request})
 
-@app.get('/script.js')
+@app.get('/static/script.js')
 def getCSS(request : Request):
-    return templates.TemplateResponse("script.js", {"request": request})
+    return templates.TemplateResponse("static/script.js", {"request": request})
 
 @app.get('/getNbrPosts')
 def getNbrPosts():
-    return {'nbrPosts':5}
+    data = open('Ressources/file.json', 'r') .readlines()
+    return {'nbrPosts':len(data)}
 
-@app.get('/getImg/{name}')
-def getImg(name):
-    path = name.split('.')
-    extension = path[-1]
-    path = 'Ressources/' + '.'.join(path)
-    return FileResponse(path, media_type=extension)
+@app.get('/Ressources/{name}')
+def getImg(name, request : Request):
+    path = 'Ressources/' + name
+    return templates.TemplateResponse(path, {"request": request})
+
+@app.get('/src_img/{id}')
+def getSrcImg(id):
+    data = open('Ressources/file.json', 'r').readlines()
+    for i in data:
+        i = json.loads(i)
+        if i['id'] == int(id):
+            return i['src']
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='192.168.1.57', port=1000)
+    uvicorn.run(app, host='192.168.1.31', port=1001)
 

@@ -1,6 +1,6 @@
 h1 {
     color: white;
-    font-size: 3em;
+    font-size: 5vw;
     text-align: center;
     font-family: 'Caveat', cursive;
     background: linear-gradient(to right, #ff002b, #2600ff);
@@ -10,13 +10,10 @@ h1 {
     margin-right: auto;
     background-size:cover;
     border-radius: 60px;
-    margin-bottom:5%;
 }
-
 body {
     background-color: #3a3a3b;
 }
-
 .post{
     width: 25%;
     padding-top: 22%;
@@ -39,5 +36,169 @@ table{
     margin: 6.25%;
     border-radius: 20px;
     background-color: #ffffff;
+    position: relative;
 }
+.cell:hover{
+    transform: scale(1.15);
+    transform-origin: center center;
+    position: relative;
+}
+.ajouter{
+    width: 80%;
+    height:0;
+    padding-top: 75%;
+    margin: 6.25%;
+    border-radius: 20px;
+    background-color: #b6b7b8;
+    position: relative;
+}
+.circle {
+    width: 40%;
+    height: 40%;
+    background-color: #bcbcbc;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 5px 40px rgba(10,10,10,0.5);
+}
+.long{
+    width: 65%;
+    height: 15%;
+    background-color: #eeeeee;
+    position: absolute;
+    border-radius: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.large{
+    width: 15%;
+    height: 65%;
+    background-color: #eeeeee;
+    position: absolute;
+    border-radius: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ajouter:hover .circle{
+    width: 45%;
+    height: 45%;
+}
+
+.form{
+    visibility: hidden;
+    padding-top: 50%;
+    padding-left:80%;
+    transform: translate(12%, -7%);
+    position: fixed;
+    border-radius: 50px;
+    background-color: #3e3e3e;
+    box-shadow: 0px 5px 40px rgba(10,10,10,0.5);
+    z-index: 9999;
+}
+.formImg{
+    visibility: hidden;
+    padding-top: 50%;
+    padding-left:80%;
+    transform: translate(12%, -7%);
+    position: fixed;
+    border-radius: 50px;
+    background-color: #3e3e3e;
+    box-shadow: 0px 5px 40px rgba(10,10,10,0.5);
+    z-index: 9999;
+}
+.importPhoto{
+    width: 50%;
+    height: 80%;
+    top: 9%;
+    left: 5%;
+    position: absolute;
+    background-color: #3e3e3e;
+    border: 3px solid #ffffff;
+    border-radius: 20%;
+}
+.showPhoto{
+    width: 50%;
+    height: 80%;
+    top: 9%;
+    left: 5%;
+    position: absolute;
+    background-color: #3e3e3e;
+    border: 3px solid #ffffff;
+    border-radius: 20%;
+}
+.btnSave{
+    width: 15%;
+    height: 7%;
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+    position: absolute;
+    bottom: 3%;
+    right: 5%;
+    border-radius: 20px;
+    background-color: #0000ff;
+    border: 2px solid #0000ff;
+}
+.btnQuit{
+    width: 15%;
+    height: 7%;
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+    position: absolute;
+    bottom: 3%;
+    right: 22%;
+    border-radius: 20px;
+    background-color: #3e3e3e;
+    border: 2px solid #ffffff;
+}
+.focale{
+    width: 5%;
+    padding-bottom: 5%;
+    position: absolute;
+    top: 12%;
+    right: 30%;
+    background-image: url("http://192.168.1.31:1001/Ressources/logos/focale.png");
+    background-size: cover;
+    background-position: center;
+}
+.vitesse{
+    width: 5%;
+    padding-bottom: 5%;
+    position: absolute;
+    top: 25%;
+    right: 30%;
+    background-image: url("http://192.168.1.31:1001/Ressources/logos/vitesse.png");
+    background-size: cover;
+    background-position: center;
+}
+.iso{
+    width: 5%;
+    padding-bottom: 5%;
+    position: absolute;
+    top: 37%;
+    right: 30%;
+    background-image: url("http://192.168.1.31:1001/Ressources/logos/iso.png");
+    background-size: cover;
+    background-position: center;
+}
+.distance{
+    width: 5%;
+    padding-bottom: 5%;
+    position: absolute;
+    top: 47%;
+    right: 30%;
+    background-image: url("http://192.168.1.31:1001/Ressources/logos/distance.png");
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+
+
 
