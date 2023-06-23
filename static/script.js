@@ -11,60 +11,58 @@ function request(url){
 }
 
 function generateTable(){
-	request(url + 'getNbrPosts')
+	request(url + 'getIds')
 		.then(data => {
-			if(data.nbrPosts!=0){
-				const tablecontainer = document.getElementById('tablecontainer');
-				const table = document.createElement('table');
-				const tbody = document.createElement('tbody');
-
-				for(let i=0; i<data.nbrPosts+1; i++){
-					if(i%3 == 0){
-						raw = document.createElement('tr');
-					}
-					const cell = document.createElement('td');
-					const div = document.createElement('div');
-					
-					if(i==data.nbrPosts){
-						div.className = 'ajouter';
-						const p = document.createElement('div');
-
-						const large = document.createElement('div');
-						const long = document.createElement('div');
-						large.className = 'large';
-						long.className = 'long';
-						p.appendChild(large);
-						p.appendChild(long);
-
-						p.className = 'circle';
-						div.addEventListener('click', showForm);
-						div.appendChild(p);
-					}
-					else{
-						div.className = 'cell';
-						request(url + 'src_img/' + i)
-							.then(src => {
-								div.id = i;
-								div.style.backgroundImage = 'url(' + url + 'Ressources/img/' + src + ')';
-								div.style.backgroundSize = 'cover';
-								div.style.backgroundPosition = 'center';
-								div.addEventListener('click', () => {showImage(i);});
-							})
-							.catch(error => {
-							    console.error(error);
-							});
-					}
-					
-					cell.appendChild(div);
-					raw.appendChild(cell);
-
-					if((i+1)%3==0 || i==data.nbrPosts){
-						tbody.appendChild(raw);
-					}
+			const tablecontainer = document.getElementById('tablecontainer');
+			const table = document.createElement('table');
+			const tbody = document.createElement('tbody');
+			for(let i=0; i<data.listId.length+1; i++){
+				j = data.listId[i];
+				if(i%3 == 0){
+					raw = document.createElement('tr');
 				}
-				table.appendChild(tbody);
-				tablecontainer.appendChild(table);
+				const cell = document.createElement('td');
+				const div = document.createElement('div');
+				
+				if(i==data.listId.length){
+					div.className = 'ajouter';
+					const p = document.createElement('div');
+
+					const large = document.createElement('div');
+					const long = document.createElement('div');
+					large.className = 'large';
+					long.className = 'long';
+					p.appendChild(large);
+					p.appendChild(long);
+
+					p.className = 'circle';
+					div.addEventListener('click', showForm);
+					div.appendChild(p);
+				}
+				else{
+					div.className = 'cell';
+					request(url + 'src_img/' + j)
+						.then(src => {
+							div.id = j;
+							div.style.backgroundImage = 'url(' + url + 'Ressources/img/' + src + ')';
+							div.style.backgroundSize = 'cover';
+							div.style.backgroundPosition = 'center';
+							div.addEventListener('click', () => {showImage(i);});
+						})
+						.catch(error => {
+						    console.error(error);
+						});
+				}
+				
+				cell.appendChild(div);
+				raw.appendChild(cell);
+
+				if((i+1)%3==0 || j==data.listId[-1]){
+					tbody.appendChild(raw);
+				}
 			}
+			table.appendChild(tbody);
+			tablecontainer.appendChild(table);
 		})
 		.catch(error => {
 			console.error(error);
@@ -127,11 +125,46 @@ function generateTable(){
 
 function hidForm(){
 	const form = document.getElementById('form');
+	document.getElementById('inputImg').style.visibility = "hidden";
+	document.getElementById('importPhoto').style.backgroundImage = "";
 	form.style.visibility = 'hidden';
 }
 function showForm(){
+	const input = document.getElementById('uploadImg');
+	const parent = input.parentNode;
+	const newInput = input.cloneNode(true);
+	parent.replaceChild(newInput, input);
+
 	const form = document.getElementById('form');
 	form.style.visibility = 'visible';
+	document.getElementById('inputImg').style.visibility = 'visible';
+
+	const inputImg = document.getElementById('importPhoto')
+	if(!hasEventListener(inputImg, 'click', inputClick)){
+		inputImg.addEventListener('click', inputClick);
+	}
+
+	newInput.addEventListener('change', () => {
+		if (newInput.files.length > 0) {
+    		const file = newInput.files[0];
+    		const reader = new FileReader();
+
+    		reader.onload = () => {
+    			const path = reader.result;
+    			document.getElementById('inputImg').style.visibility = 'hidden';
+	    		document.getElementById('importPhoto').style.backgroundImage = 'url("' + path + '")';
+	    		document.getElementById('importPhoto').style.backgroundPosition = 'center';
+	    		document.getElementById('importPhoto').style.backgroundSize = 'cover';
+    		}
+    		reader.readAsDataURL(file);
+    		uploadFile(file);
+    		newInput.value = "";	
+    		return;
+  		}
+	})
+}
+function inputClick(){
+	document.getElementById('uploadImg').click();
 }
 
 function showImage(id){
@@ -151,4 +184,46 @@ function showImage(id){
 function hidFormImg(){
 	const formImg = document.getElementById('formImg');
 	formImg.style.visibility = 'hidden';
+}
+
+function hasEventListener(element, eventName, callback) {
+  var eventListeners = element.__eventListeners || {};
+  var callbacks = eventListeners[eventName] || [];
+  
+  if (callback) {
+    return callbacks.some(function(listener) {
+      return listener === callback;
+    });
+  } else {
+    return callbacks.length > 0;
+  }
+}
+
+function uploadFile(file){
+	const formData = new FormData();
+	formData.append('file', file);
+
+	fetch('/upload', {
+		method: 'POST',
+		body: formData,
+	})
+	.then(response => response.json())
+	.then(data => {console.log(data.message);})
+	.catch(error => console.error(error));
+}
+function cancelUpload(){
+	const doc = document.getElementById('importPhoto');
+	var isBgIm = getComputedStyle(doc).backgroundImage;
+	if(isBgIm !== 'none'){
+		fetch('/cancelUpload', {
+			method: 'DELETE',
+		})
+		.then(response => response.json())
+		.then(data => {console.log(data.message);})
+		.catch(error => console.error(error));
+	}
+	hidForm();
+}
+function savePhoto(){
+	location.reload();
 }

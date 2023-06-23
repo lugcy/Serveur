@@ -9,28 +9,24 @@
     <title>Page photo</title>
     <script type="text/javascript" src="http://192.168.1.31:1001/static/script.js"></script>
 </head>
-<body onload="generate Table()">
+<body onload="generateTable()">
     <header><div class="div"></div><h1>@ac_graphie</h1></div></header>
     <main>
         <div id="formImg" class="formImg">
             <div id="showPhoto" class="showPhoto"></div>
-            <div id="focale" class="focale"></div>
-            <div id="vitesse" class="vitesse"></div>
-            <div id="iso" class="iso"></div>
-            <div id="distance" class="distance"></div>
-            <button id="btnSave" class="btnSave">Modifier</button>
+            <div id="focale" class="focale"></div><div id="vitesse" class="vitesse"></div><div id="iso" class="iso"></div><div id="distance" class="distance"></div>
+            <button id="btnSave" class="btnSave" >Modifier</button>
             <button id="btnQuit" class="btnQuit" onclick="hidFormImg()">Annuler</button>
+            <button id="btnSuppr" class="btnSuppr" onclick="delete()">Supprimer</button>
         </div>
         <div id="form" class="form">
             <div id="importPhoto" class="importPhoto">
-                <div class="circle"><div class="large"></div><div class="long"></div></div>
+                <input type="file" id="uploadImg" accept="image/*" style="display: none">
+                <div id="inputImg" class="circle"><div class="large"></div><div class="long"></div></div>
             </div>
-            <div class="focale"></div>
-            <div class="vitesse"></div>
-            <div class="iso"></div>
-            <div class="distance"></div>
-            <button id="btnSave" class="btnSave">Save</button>
-            <button id="btnQuit" class="btnQuit" onclick="hidForm()">Annuler</button>
+            <div class="focale"></div><div class="vitesse"></div><div class="iso"></div><div class="distance"></div>
+            <button class="btnSave" onclick="savePhoto()">Save</button>
+            <button class="btnQuit" onclick="cancelUpload()">Annuler</button>
         </div>
         <section>
             <div id="tablecontainer"></div>
